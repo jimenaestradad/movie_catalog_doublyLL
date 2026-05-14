@@ -58,3 +58,27 @@ class DoubleLinkedList:
             current = current.next
 
         return None
+    
+    def delete_node(self, element_data):
+        node_to_delete = self.search(element_data)
+        if node_to_delete is None:
+            return
+
+        if node_to_delete == self.start:
+            self.start = node_to_delete.next
+
+            if self.start is not None:
+                self.start.prev = None
+
+            else:
+                self.end = None
+
+  
+        elif node_to_delete == self.end:
+            self.end = node_to_delete.prev
+            self.end.next = None
+
+
+        else:
+            node_to_delete.prev.next = node_to_delete.next
+            node_to_delete.next.prev = node_to_delete.prev
