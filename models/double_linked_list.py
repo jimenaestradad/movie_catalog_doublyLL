@@ -48,3 +48,13 @@ class DoubleLinkedList:
             self.end.next = element
             element.prev = self.end
             self.end = element
+    
+    def search(self, element_data):
+        current = self.start
+        while current is not None:
+            if current.data == element_data:
+                return current
+
+            current = current.next
+
+        return None
