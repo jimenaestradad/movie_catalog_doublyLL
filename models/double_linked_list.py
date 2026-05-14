@@ -82,3 +82,17 @@ class DoubleLinkedList:
         else:
             node_to_delete.prev.next = node_to_delete.next
             node_to_delete.next.prev = node_to_delete.prev
+        
+        
+    def insert_after_node(self, element, node_reference):
+        current = self.search(node_reference)
+        if current is None:
+            return
+
+        if current == self.end:
+            self.insert_at_end(element)
+        else:
+            element.next = current.next
+            element.prev = current
+            current.next.prev = element
+            current.next = element
