@@ -14,9 +14,11 @@ def normalize_title(title):
 
 @app.route("/")
 def home():
+
     movies = [node.data for node in movie_list]
 
     current_movie = None
+
     if movies:
         current_movie = movies[current_index]
 
@@ -34,13 +36,17 @@ def home():
 
 @app.route("/add", methods=["POST"])
 def add_movie():
+
     movie_title = request.form.get("title", "").strip()
 
     if movie_title:
+
         normalized_new_title = normalize_title(movie_title)
+
         existing_movie = None
 
         for node in movie_list:
+
             if normalize_title(node.data) == normalized_new_title:
                 existing_movie = node
                 break
@@ -57,8 +63,39 @@ def add_movie():
     return redirect("/")
 
 
+@app.route("/delete", methods=["POST"])
+def delete_movie():
+
+    global current_index
+
+    movie_title = request.form.get("title", "").strip()
+
+    if movie_title:
+
+        actual_movie = None
+
+        for node in movie_list:
+
+            if normalize_title(node.data) == normalize_title(movie_title):
+                actual_movie = node.data
+                break
+
+        if actual_movie is not None:
+
+            movie_list.delete_node(actual_movie)
+
+            if len(movie_list) == 0:
+                current_index = 0
+
+            elif current_index > len(movie_list) - 1:
+                current_index = len(movie_list) - 1
+
+    return redirect("/")
+
+
 @app.route("/previous")
 def previous_movie():
+
     global current_index
 
     if current_index > 0:
@@ -69,6 +106,7 @@ def previous_movie():
 
 @app.route("/next")
 def next_movie():
+
     global current_index
 
     if current_index < len(movie_list) - 1:
@@ -79,11 +117,13 @@ def next_movie():
 
 @app.route("/search", methods=["POST"])
 def search_movie():
+
     movie_title = request.form.get("search_title", "").strip()
 
     movies = [node.data for node in movie_list]
 
     current_movie = None
+
     if movies:
         current_movie = movies[current_index]
 
@@ -91,15 +131,18 @@ def search_movie():
     search_message = None
 
     if movie_title:
+
         result = None
 
         for node in movie_list:
+
             if normalize_title(node.data) == normalize_title(movie_title):
                 result = node
                 break
 
         if result is not None:
             searched_movie = result.data
+
         else:
             search_message = f"Movie '{movie_title}' not found."
 

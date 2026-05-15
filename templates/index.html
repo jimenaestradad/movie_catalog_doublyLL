@@ -28,6 +28,7 @@
 
     </form>
 
+
     <form action="/search" method="POST">
 
         <input
@@ -43,26 +44,39 @@
 
     </form>
 
+
     {% if searched_movie %}
+
         <div class="current-movie">
+
             <h2>Search Result</h2>
+
             <div class="movie-card current-card">
                 {{ searched_movie }}
             </div>
+
         </div>
+
     {% endif %}
 
+
     {% if search_message %}
+
         <p class="message-error">
             {{ search_message }}
         </p>
+
     {% endif %}
 
+
     {% if duplicate_message %}
+
         <p class="message-error">
             {{ duplicate_message }}
         </p>
+
     {% endif %}
+
 
     {% if current_movie %}
 
@@ -73,6 +87,7 @@
             <div class="movie-card current-card">
                 {{ current_movie }}
             </div>
+
 
             <div class="navigation-buttons">
 
@@ -101,7 +116,26 @@
         {% for movie in movies %}
 
             <div class="movie-card">
-                {{ movie }}
+
+                <span>
+                    {{ movie }}
+                </span>
+
+
+                <form action="/delete" method="POST">
+
+                    <input
+                        type="hidden"
+                        name="title"
+                        value="{{ movie }}"
+                    >
+
+                    <button type="submit">
+                        Delete
+                    </button>
+
+                </form>
+
             </div>
 
         {% endfor %}
