@@ -2,16 +2,21 @@ from flask import Flask, render_template, request, redirect, url_for
 from models.node import Node
 from models.double_linked_list import DoubleLinkedList
 
+
+# Inicializa Flask y crea la estructura principal del catálogo utilizando Double Linked List.
 app = Flask(__name__)
 
 movie_list = DoubleLinkedList()
 current_index = 0
 
 
+# Normaliza títulos ignorando espacios y mayúsculas/minúsculas.
 def normalize_title(title):
+
     return "".join(title.lower().split())
 
 
+# Ruta principal que renderiza el catálogo y la película actual.
 @app.route("/")
 def home():
 
@@ -34,6 +39,7 @@ def home():
     )
 
 
+# Agrega nuevas películas validando duplicados dentro de la lista.
 @app.route("/add", methods=["POST"])
 def add_movie():
 
@@ -63,6 +69,7 @@ def add_movie():
     return redirect("/")
 
 
+# Elimina películas utilizando delete_node() y actualiza la navegación actual.
 @app.route("/delete", methods=["POST"])
 def delete_movie():
 
@@ -93,6 +100,7 @@ def delete_movie():
     return redirect("/")
 
 
+# Navega hacia la película anterior utilizando current_index.
 @app.route("/previous")
 def previous_movie():
 
@@ -104,6 +112,7 @@ def previous_movie():
     return redirect("/")
 
 
+# Navega hacia la siguiente película utilizando current_index.
 @app.route("/next")
 def next_movie():
 
@@ -115,6 +124,7 @@ def next_movie():
     return redirect("/")
 
 
+# Busca películas dentro del catálogo utilizando el método search().
 @app.route("/search", methods=["POST"])
 def search_movie():
 
@@ -154,7 +164,6 @@ def search_movie():
         search_message=search_message,
         duplicate_message=None
     )
-
 
 if __name__ == "__main__":
     app.run(debug=True)

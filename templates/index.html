@@ -2,11 +2,13 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Catalog</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
@@ -28,7 +30,6 @@
 
     </form>
 
-
     <form action="/search" method="POST">
 
         <input
@@ -45,6 +46,7 @@
     </form>
 
 
+    <!-- Resultado de búsqueda -->
     {% if searched_movie %}
 
         <div class="current-movie">
@@ -60,6 +62,7 @@
     {% endif %}
 
 
+    <!-- Mensajes de búsqueda o duplicados -->
     {% if search_message %}
 
         <p class="message-error">
@@ -78,6 +81,7 @@
     {% endif %}
 
 
+    <!-- Película actual y navegación previous/next -->
     {% if current_movie %}
 
         <div class="current-movie">
@@ -111,6 +115,7 @@
     {% endif %}
 
 
+    <!-- Contenedor principal del catálogo -->
     <div class="movie-container">
 
         {% for movie in movies %}
@@ -120,7 +125,6 @@
                 <span>
                     {{ movie }}
                 </span>
-
 
                 <form action="/delete" method="POST">
 

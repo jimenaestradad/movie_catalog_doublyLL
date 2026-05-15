@@ -3,34 +3,43 @@ from models.node import Node
 from models.double_linked_list import DoubleLinkedList
 
 
+# Crea una lista de ejemplo reutilizable
 def create_sample_list():
+
     dll = DoubleLinkedList()
+
     dll.insert_at_end(Node("Titanic"))
     dll.insert_at_end(Node("Harry Potter"))
     dll.insert_at_end(Node("The Matrix"))
+
     return dll
 
 
 def dll_to_list(dll):
     return [node.data for node in dll]
 
-
 insert_at_beginning_test_cases = [
+
     ([], ["Avatar"]),
+
     (["Titanic"], ["Avatar", "Titanic"]),
 ]
-
 insert_at_end_test_cases = [
+
     ([], ["Titanic"]),
+
     (["Harry Potter"], ["Harry Potter", "Titanic"]),
 ]
 
 search_test_cases = [
+
     ("Harry Potter", True),
+
     ("Frozen", False),
 ]
 
 delete_node_test_cases = [
+
     (
         ["Titanic", "Harry Potter", "The Matrix"],
         "Harry Potter",
@@ -51,6 +60,7 @@ delete_node_test_cases = [
 ]
 
 insert_after_node_test_cases = [
+
     (
         ["Titanic", "Harry Potter", "The Matrix"],
         "Harry Potter",
@@ -60,6 +70,7 @@ insert_after_node_test_cases = [
 ]
 
 
+# Verifica inserciones correctas al inicio y mantiene estructura no circular.
 @pytest.mark.parametrize("initial_list, expected", insert_at_beginning_test_cases)
 def test_insert_at_beginning(initial_list, expected):
 
@@ -75,6 +86,7 @@ def test_insert_at_beginning(initial_list, expected):
     assert dll.end.next is None
 
 
+# Verifica inserciones correctas al final y mantiene estructura no circular.
 @pytest.mark.parametrize("initial_list, expected", insert_at_end_test_cases)
 def test_insert_at_end(initial_list, expected):
 
@@ -90,6 +102,7 @@ def test_insert_at_end(initial_list, expected):
     assert dll.end.next is None
 
 
+# Verifica búsquedas existentes y no existentes dentro de la lista.
 @pytest.mark.parametrize("value, expected_exists", search_test_cases)
 def test_search(value, expected_exists):
 
@@ -98,13 +111,16 @@ def test_search(value, expected_exists):
     result = dll.search(value)
 
     if expected_exists:
+
         assert result is not None
         assert result.data == value
 
     else:
+
         assert result is None
 
 
+# Verifica eliminación de nodos y reorganización correcta de enlaces.
 @pytest.mark.parametrize(
     "initial_list, element_to_delete, expected",
     delete_node_test_cases
@@ -121,10 +137,12 @@ def test_delete_node(initial_list, element_to_delete, expected):
     assert dll_to_list(dll) == expected
 
     if len(dll) > 0:
+
         assert dll.start.prev is None
         assert dll.end.next is None
 
 
+# Verifica inserción de nodos después de una referencia específica.
 @pytest.mark.parametrize(
     "initial_list, reference, new_value, expected",
     insert_after_node_test_cases
