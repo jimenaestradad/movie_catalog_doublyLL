@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Catalog</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -13,40 +14,98 @@
     <h1>Movie Catalog</h1>
 
     <form action="/add" method="POST">
+
         <input
             type="text"
             name="title"
             placeholder="Enter movie title"
             required
         >
-        <button type="submit">Add Movie</button>
+
+        <button type="submit">
+            Add Movie
+        </button>
+
     </form>
 
-    {% if current_movie %}
+    <form action="/search" method="POST">
+
+        <input
+            type="text"
+            name="search_title"
+            placeholder="Search movie title"
+            required
+        >
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+    {% if searched_movie %}
         <div class="current-movie">
+            <h2>Search Result</h2>
+            <div class="movie-card current-card">
+                {{ searched_movie }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if search_message %}
+        <p class="message-error">
+            {{ search_message }}
+        </p>
+    {% endif %}
+
+    {% if duplicate_message %}
+        <p class="message-error">
+            {{ duplicate_message }}
+        </p>
+    {% endif %}
+
+    {% if current_movie %}
+
+        <div class="current-movie">
+
             <h2>Current Movie</h2>
+
             <div class="movie-card current-card">
                 {{ current_movie }}
             </div>
 
             <div class="navigation-buttons">
+
                 <a href="/previous">
-                    <button type="button">Previous</button>
+                    <button type="button">
+                        Previous
+                    </button>
                 </a>
+
 
                 <a href="/next">
-                    <button type="button">Next</button>
+                    <button type="button">
+                        Next
+                    </button>
                 </a>
+
             </div>
+
         </div>
+
     {% endif %}
 
+
     <div class="movie-container">
+
         {% for movie in movies %}
+
             <div class="movie-card">
                 {{ movie }}
             </div>
+
         {% endfor %}
+
     </div>
 
 </body>

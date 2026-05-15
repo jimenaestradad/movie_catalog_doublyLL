@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from models.node import Node
 from models.double_linked_list import DoubleLinkedList
 
@@ -6,6 +6,10 @@ app = Flask(__name__)
 
 movie_list = DoubleLinkedList()
 current_index = 0
+
+
+def normalize_title(title):
+    return "".join(title.lower().split())
 
 
 @app.route("/")
@@ -16,19 +20,39 @@ def home():
     if movies:
         current_movie = movies[current_index]
 
+    duplicate_message = request.args.get("message")
+
     return render_template(
         "index.html",
         movies=movies,
-        current_movie=current_movie
+        current_movie=current_movie,
+        searched_movie=None,
+        search_message=None,
+        duplicate_message=duplicate_message
     )
 
 
 @app.route("/add", methods=["POST"])
 def add_movie():
-    movie_title = request.form.get("title")
+    movie_title = request.form.get("title", "").strip()
 
     if movie_title:
-        movie_list.insert_at_end(Node(movie_title))
+        normalized_new_title = normalize_title(movie_title)
+        existing_movie = None
+
+        for node in movie_list:
+            if normalize_title(node.data) == normalized_new_title:
+                existing_movie = node
+                break
+
+        if existing_movie is None:
+            movie_list.insert_at_end(Node(movie_title))
+            return redirect("/")
+
+        return redirect(url_for(
+            "home",
+            message=f"Movie '{movie_title}' already exists in your list."
+        ))
 
     return redirect("/")
 
@@ -51,6 +75,42 @@ def next_movie():
         current_index += 1
 
     return redirect("/")
+
+
+@app.route("/search", methods=["POST"])
+def search_movie():
+    movie_title = request.form.get("search_title", "").strip()
+
+    movies = [node.data for node in movie_list]
+
+    current_movie = None
+    if movies:
+        current_movie = movies[current_index]
+
+    searched_movie = None
+    search_message = None
+
+    if movie_title:
+        result = None
+
+        for node in movie_list:
+            if normalize_title(node.data) == normalize_title(movie_title):
+                result = node
+                break
+
+        if result is not None:
+            searched_movie = result.data
+        else:
+            search_message = f"Movie '{movie_title}' not found."
+
+    return render_template(
+        "index.html",
+        movies=movies,
+        current_movie=current_movie,
+        searched_movie=searched_movie,
+        search_message=search_message,
+        duplicate_message=None
+    )
 
 
 if __name__ == "__main__":

@@ -1,103 +1,131 @@
 /* Estilos generales de toda la página */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #111827;
+    background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
     color: white;
     text-align: center;
-    padding: 50px 20px;
     margin: 0;
+    padding: 60px 20px;
 }
 
-/* Título principal de la página */
+/* Título principal */
 h1 {
-    font-size: 3rem;
-    margin-bottom: 30px;
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 35px;
+    letter-spacing: 1px;
 }
 
-/* Contenedor del formulario para agregar películas */
+/* Formulario general */
 form {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
 }
 
-/* Campos de texto del formulario */
+/* Campos de texto */
 input {
-    padding: 12px 14px;
-    width: 260px;
-    border-radius: 10px;
-    border: none;
+    padding: 14px 16px;
+    width: 320px;
+    max-width: 90vw;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
     font-size: 1rem;
     outline: none;
+    background-color: #f9fafb;
+    color: #111827;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Botón para agregar película */
+/* Botones */
 button {
-    padding: 12px 20px;
+    padding: 14px 22px;
     border: none;
-    border-radius: 10px;
-    background-color: #2563eb;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
     color: white;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
 }
 
-/* Efecto al pasar el mouse sobre el botón */
+/* Efecto al pasar el mouse */
 button:hover {
-    background-color: #1d4ed8;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
 }
 
-/* Sección donde se muestra la película actual */
+/* Contenedor de la película actual */
 .current-movie {
-
-    /* Espacio arriba */
-    margin-top: 40px;
-
-    /* Activa Flexbox */
+    margin: 42px 0 18px;
     display: flex;
-
-    /* Organiza elementos verticalmente */
     flex-direction: column;
-
-    /* Centra horizontalmente */
     align-items: center;
+    gap: 16px;
+}
+
+/* Título de la película actual */
+.current-movie h2 {
+    font-size: 1.9rem;
+    margin: 0;
+    color: #f8fafc;
 }
 
 /* Tarjeta destacada de la película actual */
 .current-card {
     border: 2px solid #60a5fa;
+    background: linear-gradient(180deg, #243044 0%, #1f2937 100%);
+    width: 260px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
 }
 
-/* Contenedor de los botones de navegación */
+/* Botones de navegación */
 .navigation-buttons {
-    margin-top: 20px;
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 14px;
+    margin-top: 4px;
 }
 
-/* Estilos para los enlaces que contienen los botones */
 .navigation-buttons a {
     text-decoration: none;
 }
 
 /* Contenedor de las tarjetas */
 .movie-container {
-    margin-top: 40px;
+    margin-top: 44px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 22px;
+    padding-bottom: 20px;
 }
 
 /* Tarjeta individual de película */
 .movie-card {
-    background-color: #1f2937;
-    padding: 20px;
-    border-radius: 15px;
-    width: 200px;
-    font-size: 1.2rem;
+    background: linear-gradient(180deg, #1f2937 0%, #273244 100%);
+    padding: 22px;
+    border-radius: 18px;
+    width: 230px;
+    min-height: 70px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Efecto al pasar el mouse sobre una tarjeta */
+.movie-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
 }
