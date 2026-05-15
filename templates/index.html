@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Catalog</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <h1>Movie Catalog</h1>
+
+    <form action="/add" method="POST">
+
+        <input
+            type="text"
+            name="title"
+            placeholder="Enter movie title"
+            required
+        >
+
+        <button type="submit">
+            Add Movie
+        </button>
+
+    </form>
+
+    <form action="/search" method="POST">
+
+        <input
+            type="text"
+            name="search_title"
+            placeholder="Search movie title"
+            required
+        >
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+
+    <!-- Resultado de búsqueda -->
+    {% if searched_movie %}
+
+        <div class="current-movie">
+
+            <h2>Search Result</h2>
+
+            <div class="movie-card current-card">
+                {{ searched_movie }}
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- Mensajes de búsqueda o duplicados -->
+    {% if search_message %}
+
+        <p class="message-error">
+            {{ search_message }}
+        </p>
+
+    {% endif %}
+
+
+    {% if duplicate_message %}
+
+        <p class="message-error">
+            {{ duplicate_message }}
+        </p>
+
+    {% endif %}
+
+
+    <!-- Película actual y navegación previous/next -->
+    {% if current_movie %}
+
+        <div class="current-movie">
+
+            <h2>Current Movie</h2>
+
+            <div class="movie-card current-card">
+                {{ current_movie }}
+            </div>
+
+
+            <div class="navigation-buttons">
+
+                <a href="/previous">
+                    <button type="button">
+                        Previous
+                    </button>
+                </a>
+
+
+                <a href="/next">
+                    <button type="button">
+                        Next
+                    </button>
+                </a>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- Contenedor principal del catálogo -->
+    <div class="movie-container">
+
+        {% for movie in movies %}
+
+            <div class="movie-card">
+
+                <span>
+                    {{ movie }}
+                </span>
+
+                <form action="/delete" method="POST">
+
+                    <input
+                        type="hidden"
+                        name="title"
+                        value="{{ movie }}"
+                    >
+
+                    <button type="submit">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+
+</html>
